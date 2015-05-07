@@ -31,11 +31,11 @@ set-option -g @ssh 'x' # or your favorite key binding
 
 ## Todo
 
-- [] Remove hard codes.
-- [] Create the option to change log path.
-- [] Support [tmuxinator](https://github.com/tmuxinator/tmuxinator) integration.
-- [] Create clustering ssh option.
-- [] Write documents.
+- [ ] Remove hard codes.
+- [ ] Create the option to change log path.
+- [ ] Support [tmuxinator](https://github.com/tmuxinator/tmuxinator) integration.
+- [ ] Create clustering ssh option.
+- [ ] Write documents.
 
 ## License
 

@@ -25,7 +25,16 @@ elif [[ $(echo "$ARGS" | grep -cE '[[:space:]]') -eq 1 ]]; then
   echo "$ARGS" | grep -qE '^(s|h|v) ' || echo_err
 
   ACTION="$(echo "$ARGS" | awk '{print $1}')"
-  HOST_NAME="$(echo "$ARGS" | awk '{print $2}')"
+
+  if echo "$ARGS" | grep -qE '^k$'; then
+    HOST_NAME="kero"
+  elif echo "$ARGS" | grep -qE '^c$'; then
+    HOST_NAME="config"
+  elif echo "$ARGS" | grep -qE '^o$'; then
+    HOST_NAME="ops1"
+  else
+    HOST_NAME="$(echo "$ARGS" | awk '{print $2}')"
+  fi
 else
   echo_err
 fi
@@ -44,8 +53,13 @@ case "$ACTION" in
       pipe-pane "cat >> $LOG_FILE"
     ;;
   h|v)
-    tmux split-window "-$ACTION" "ssh -t kero 'sudo ssh $HOST_NAME'" \; \
-      pipe-pane "cat >> $LOG_FILE"
+    if echo "$HOST_NAME" | grep -qE 'kero|config|ops1'; then
+      tmux new-window -n "$HOST_NAME" "ssh $HOST_NAME" \; \
+        pipe-pane "cat >> $LOG_FILE"
+    else
+      tmux split-window "-$ACTION" "ssh -t kero 'sudo ssh $HOST_NAME'" \; \
+        pipe-pane "cat >> $LOG_FILE"
+    fi
     ;;
   *)
     echo_err

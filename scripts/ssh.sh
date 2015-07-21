@@ -1,8 +1,6 @@
 #!/usr/bin/env bash
 
 ARGS="$@"
-LOG_DIR="${HOME}/.tmux-ssh-logs/${HOST_NAME}/$(date '+%Y-%m/%d')"
-LOG_FILE="${LOG_DIR}/$(date '+%H:%M:%S').log"
 
 echo_err() {
   tmux display-message "Unknown Argument: $ARGS"
@@ -38,6 +36,9 @@ elif [[ $(echo "$ARGS" | grep -cE '[[:space:]]') -eq 1 ]]; then
 else
   echo_err
 fi
+
+LOG_DIR="${HOME}/.tmux-ssh-logs/${HOST_NAME}/$(date '+%Y-%m/%d')"
+LOG_FILE="${LOG_DIR}/$(date '+%H:%M:%S').log"
 
 [[ -d "$LOG_DIR" ]] || mkdir -p "$LOG_DIR"
 [[ $? -eq 0 ]]      || { tmux display-message "Can not create $LOG_DIR"; exit 0; }

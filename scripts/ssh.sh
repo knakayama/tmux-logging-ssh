@@ -46,7 +46,7 @@ LOG_FILE="${LOG_DIR}/$(date '+%H:%M:%S').log"
 case "$ACTION" in
   s)
     tmux new-window -n "$(echo "$HOST_NAME" | cut -d. -f1)" \
-      "ssh -t kero 'sudo ssh $HOST_NAME'" \; \
+      "ssh -t ops1 'sudo ssh $HOST_NAME'" \; \
       pipe-pane "cat >> $LOG_FILE"
     ;;
   k|c|o)
@@ -58,7 +58,7 @@ case "$ACTION" in
       tmux split-window "-$ACTION" "ssh $HOST_NAME" \; \
         pipe-pane "cat >> $LOG_FILE"
     else
-      tmux split-window "-$ACTION" "ssh -t kero 'sudo ssh $HOST_NAME'" \; \
+      tmux split-window "-$ACTION" "ssh -t ops1 'sudo ssh $HOST_NAME'" \; \
         pipe-pane "cat >> $LOG_FILE"
     fi
     ;;
